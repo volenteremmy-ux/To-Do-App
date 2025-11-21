@@ -3,14 +3,14 @@ const Task = require('../models/taskModel');
 // Create Task
 exports.createTask = async (req, res) => {
   try {
-    const { name, description, dueDate } = req.body;
+    const { task_title, description, dueDate } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ error: "Name is required" });
+    if (!task_title) {
+      return res.status(400).json({ error: "Task is required" });
     }
 
     const task = await Task.create({
-      name,
+      task_title,
       description,
       dueDate
     });
@@ -50,10 +50,10 @@ exports.getTaskById = async (req, res) => {
 // Search Tasks by Name
 exports.searchTasks = async (req, res) => {
   try {
-    const { name } = req.query;
+    const { task_title } = req.query;
 
     const results = await Task.find({
-      name: { $regex: name, $options: "i" }
+      task_title: { $regex: task_title, $options: "i" }
     });
 
     res.json(results);
